@@ -6,8 +6,8 @@ class topsis():
     def __init__(self,input,weights,impacts):
         
         self.input_file=input
-        self.weight=weights
-        self.impacts=impacts
+        self.w=weights
+        self.imp=impacts
     
     def result(self):
         try:
@@ -17,21 +17,28 @@ class topsis():
             print(err)
             exit()
 
-        if any(True for char in weight if char in '@^! #%$&)(+*-="'):
+        if any(True for char in self.w if char in '@^! #%$&)(+*-="'):
             err=['Error: Weights are not separated by a comma']
             print(err)
             exit()
         else:
-            weight = weight.split(",")
+            weight = self.w.split(",")
 
 
-        if any(True for char in impacts if char in '@^! #%$&)(*="'):
+        if any(True for char in self.imp if char in '@^! #%$&)(*="'):
             err=['Error: Impacts are not given correctly']
             print(err)
             exit()
         else:
-            print("Impact correctly given")
-            impacts = impacts.split(",")
+            impacts = self.imp.split(",")
+        
+        
+        for imp in impacts:
+            if(imp=='+' or imp=='-'):
+                continue
+            else:
+                print("Impacts must be either positive or negative!")
+                exit()
 
         data= df.drop(df.columns[[0]], axis = 1)
         
